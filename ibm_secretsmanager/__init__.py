@@ -12,18 +12,17 @@ def lookup_secret(**kwargs):
     base_url = kwargs.get("url")
     iam_token = kwargs.get("iam_token")
     uuid = kwargs.get("uuid")
-
-    print(base_url, iam_token, uuid)
+    url = urljoin(base_url, f"/api/v2/secrets/{uuid}")
 
     session = requests.Session()
     session.headers["Authorization"] = f"Bearer {iam_token}"
     session.headers["Accept"] = "application/json"
-    url = urljoin(base_url, f"/api/v2/secrets/{uuid}")
-    print(url)
+
     response = session.get(url)
     # raise_for_status(response)
+    response.raise_for_status()
+
     json = response.json()
-    print(json)
     return json
 
 

@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-requirements = []  # add Python dependencies here
+requirements = ["requests"]  # add Python dependencies here
 # e.g., requirements = ["PyYAML"]
 
 setup(

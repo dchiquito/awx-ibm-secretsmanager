@@ -11,19 +11,20 @@ CredentialPlugin = collections.namedtuple(
 def lookup_secret(**kwargs):
     base_url = kwargs.get("url")
     iam_token = kwargs.get("iam_token")
-    id = kwargs.get("id")
+    uuid = kwargs.get("uuid")
 
-    print(base_url, iam_token, id)
+    print(base_url, iam_token, uuid)
 
     session = requests.Session()
     session.headers["Authorization"] = f"Bearer {iam_token}"
     session.headers["Accept"] = "application/json"
-    url = urljoin(base_url, f"/api/v2/secrets/${id}")
+    url = urljoin(base_url, f"/api/v2/secrets/{uuid}")
+    print(url)
     response = session.get(url)
     # raise_for_status(response)
     json = response.json()
     print(json)
-    return json["payload"]
+    return json
 
 
 ibm_secretsmanager_plugin = CredentialPlugin(
@@ -44,13 +45,13 @@ ibm_secretsmanager_plugin = CredentialPlugin(
         ],
         "metadata": [
             {
-                "id": "identifier",
-                "label": "Identifier",
+                "id": "uuid",
+                "label": "Secret UUID",
                 "type": "string",
                 "help_text": "The name of the key to fetch from IBM Secrets Manager.",
             }
         ],
-        "required": ["url", "iam_token", "id"],
+        "required": ["url", "iam_token", "uuid"],
     },
     backend=lookup_secret,
 )

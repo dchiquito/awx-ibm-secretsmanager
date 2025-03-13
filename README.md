@@ -1,6 +1,8 @@
 # awx-ibm-secretsmanager
 AWX credential plugin for IBM Secrets Manager
 
+Inspired by https://github.com/ansible/awx-custom-credential-plugin-example
+
 # Installation
 
 ```
